@@ -1,3 +1,6 @@
+import fiona
+import functools
+
 class KShp:
   def __init__(self):
     if self.has_data():
@@ -13,3 +16,13 @@ class KShp:
   def has_data(self):
     # self.log("Checking for " + self.SHP.resolve().as_posix())
     return self.SHP.exists()
+
+  @functools.lru_cache()
+  def shp(self):
+    self.log("Loading Shapefile")
+    return fiona.open(self.SHP)
+
+# from shapely.geometry import Point
+# from shapely.geometry.polygon import Polygon
+# def intersect(self, pointList):
+#   pass

@@ -2,8 +2,11 @@ from kbrgeo.kshp import KShp
 import urllib.request
 from zipfile import ZipFile
 from pathlib import Path
+"""
+Expose a
 
-class Zcta(KShp):
+"""
+class ZCTA(KShp):
   NAME = 'ZCTA'
   URL = 'https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_zcta510_500k.zip'
   DEST = Path('data/zcta.zip')
@@ -18,3 +21,7 @@ class Zcta(KShp):
     self.log("Extracting data...")
     with ZipFile('data/zcta.zip', 'r') as z:
       z.extractall('data/zcta')
+
+  def filterTo(self, zipCodes=[]):
+    zipList = list(map(str, zipCodes))
+    return list(filter(lambda r: r['properties']['GEOID10'] in zipList, self.shp()))
