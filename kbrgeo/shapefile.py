@@ -40,8 +40,9 @@ class Shapefile:
 
     f = gpd.GeoDataFrame.from_file(self.SHP)
     f.crs = self.PROJ4
-    f.to_crs(new_projection)
+    # f.to_crs(new_projection)
     f['geometry'] = f['geometry'].to_crs(new_projection)
+    f.crs = new_projection
     f.to_file(driver = 'ESRI Shapefile', filename=new_shp)
     self.log("Reloading Shapefile")
     self._file = fiona.open(new_shp)

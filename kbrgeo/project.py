@@ -25,7 +25,7 @@ class Project:
     new_file.writerecords(using_data)
     return new_file
 
-  def new_shapefile(self, name, using_data, variables=[], geotype='Polygon'):
+  def save_layer(self, name, using_data, variables=[], geotype='Polygon'):
     to = self.path_for(name)
 
     new_file = fiona.open(to, 'w',
