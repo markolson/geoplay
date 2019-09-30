@@ -1,6 +1,7 @@
 import datetime
 import fiona
 from pathlib import Path
+import csv
 
 class Project:
   def __init__(self, name, output_dir, projection):
@@ -45,6 +46,16 @@ class Project:
       new_file.write(record)
     self.log("Writing " + new_file.name)
     return new_file
+
+  def save_csv(self, name, using_data):
+    to = self.path_for(name + '.csv')
+    self.log("Writing %d records in %s" % (len(using_data), to.name))
+    fieldnames = using_data[0]['properties'].keys()
+    with open(to, 'w') as f:
+      writer = csv.DictWriter(f, fieldnames=fieldnames)
+      writer.writeheader()
+      for row in using_data:
+        writer.writerow(row['properties'])
 
   def _output_path(self):
     path = Path('output') / self.output_dir

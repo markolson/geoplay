@@ -53,7 +53,7 @@ for zip_area in buffered_zips:
     })
 
 # Write out our final file
-buffered_zip = project.save_layer(
+project.save_layer(
   name='nearby-park-counts',
   using_data=buffered_zips,
   variables={
@@ -62,3 +62,4 @@ buffered_zip = project.save_layer(
     'PARKNAMES': {'type': 'str', 'from_data': 'PARKNAMES'},
   })
 
+project.save_csv(name='zip_parks', using_data=buffered_zips)
