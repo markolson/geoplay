@@ -1,0 +1,10 @@
+convert degrees to meters
+
+
+line = LineString(x['geometries']['coordinates'])
+project = partial(
+    pyproj.transform,
+    pyproj.Proj(init='EPSG:4326'),
+    pyproj.Proj(init='EPSG:32633'))
+
+line2 = transform(deg_to_meter, line)
