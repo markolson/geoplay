@@ -59,7 +59,7 @@ class Project:
         writer.writerow(row['properties'])
 
   def limit(self, bounds, collection, buffer=0.0):
-    bounds = shape(zip_area['geometry']).buffer(buffer)
+    bounds = shape(bounds['geometry']).buffer(buffer)
 
     return list(filter(
       lambda p: bounds.intersects(shape(p['geometry'])),

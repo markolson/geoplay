@@ -1,4 +1,4 @@
-sfrom geoplay.shapefile import Shapefile
+from geoplay.shapefile import Shapefile
 from shapely.geometry import Point, mapping
 import urllib.request
 from pathlib import Path
