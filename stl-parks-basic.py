@@ -5,10 +5,10 @@ from shapely.geometry import mapping, shape
 from shapely.prepared import prep
 
 # Project configuration code
-from kbrgeo.project import Project
+from geoplay.project import Project
 # Data sources
-from kbrgeo.data.zcta import ZCTA
-from kbrgeo.data.stl_parks import StlParks
+from geoplay.data.zcta import ZCTA
+from geoplay.data.stl_parks import StlParks
 
 project = Project(
   name="Nearby Parks",

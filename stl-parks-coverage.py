@@ -1,21 +1,17 @@
-# Helpers
-import copy
 # Shapely **HAS** to be imported before anything else.
 from shapely.geometry import mapping, shape
-from shapely.prepared import prep
-
 # Project configuration code
-from kbrgeo.project import Project
+from geoplay.project import Project
 # Data sources
-from kbrgeo.data.zcta import ZCTA
-from kbrgeo.data.stl_parks import StlParks
+from geoplay.data.precise_zcta import PreciseZCTA
+from geoplay.data.stl_parks import StlParks
 
 project = Project(
   name="Nearby Parks",
   output_dir='stl-parks',
   projection='+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')
 
-zcta = project.use(ZCTA)
+zcta = project.use(PreciseZCTA)
 parks = project.use(StlParks)
 
 wanted_zips = zcta.filterTo(zipCodes=[63108, 63118, 63103, 63104, 63110])

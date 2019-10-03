@@ -1,3 +1,4 @@
+from shapely.geometry import mapping, shape
 import datetime
 import fiona
 from pathlib import Path
@@ -56,6 +57,13 @@ class Project:
       writer.writeheader()
       for row in using_data:
         writer.writerow(row['properties'])
+
+  def limit(self, bounds, collection, buffer=0.0):
+    bounds = shape(zip_area['geometry']).buffer(buffer)
+
+    return list(filter(
+      lambda p: bounds.intersects(shape(p['geometry'])),
+      collection.shapefile()))
 
   def _output_path(self):
     path = Path('output') / self.output_dir
