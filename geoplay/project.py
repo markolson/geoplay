@@ -1,4 +1,7 @@
 from shapely.geometry import mapping, shape
+import rasterio
+import rasterio.mask
+from rasterio.io import MemoryFile
 import datetime
 import fiona
 from pathlib import Path
@@ -58,12 +61,29 @@ class Project:
       for row in using_data:
         writer.writerow(row['properties'])
 
-  def limit(self, bounds, collection, buffer=0.0):
+  def limitToPolygon(self, bounds, collection, buffer=0.0):
     bounds = shape(bounds['geometry']).buffer(buffer)
 
     return list(filter(
       lambda p: bounds.intersects(shape(p['geometry'])),
       collection.shapefile()))
+
+  def clipRaster(self, name=None, raster=None, bounds=None):
+    polygon = bounds['geometry']
+    out_image, out_transform = rasterio.mask.mask(raster, [polygon], crop=True)
+    out_meta = raster.meta
+    out_meta.update({"driver": "GTiff",
+                 "height": out_image.shape[1],
+                 "width": out_image.shape[2],
+                 "transform": out_transform})
+
+    if name:
+      to = self.path_for(name+'.tif')
+      with rasterio.open(to, "w", **out_meta) as dest:
+        dest.write(out_image)
+
+    return out_image
+
 
   def _output_path(self):
     path = Path('output') / self.output_dir
