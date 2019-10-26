@@ -10,3 +10,24 @@ project = partial(
 line2 = transform(deg_to_meter, line)
 
 http://www2.census.gov/geo/tiger/TIGER_DP/2017ACS/ACS_2017_5YR_ZCTA.gdb.zip?#
+
+
+
+
+
+<osm-script output="xml">
+  <id-query {{nominatimArea:"Central West End"}} into="area"/>
+  <query type="way">
+      <has-kv k="highway" regv="motorway|trunk|primary|tertiary|secondary|service|unclassified|residential|motorway_link|trunk_link|primary_link"/>
+      <area-query from="area"/>
+  </query>
+  <union>
+    <item />
+      <recurse type="way-node"/>
+  </union>
+  <print mode="body" order="quadtile"/>
+</osm-script>
+
+convert output to geojson
+save to shapefile
+trim to pzip

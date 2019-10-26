@@ -44,7 +44,13 @@ class Project:
     for record in using_data:
       new_props = {}
       for key, data in variables.items():
-        val = data['default'] if ('default' in data) else record['properties'][data['from_data']]
+        if ('default' in data):
+          val = data['default']
+        elif data['from_data'] in record['properties']:
+          val = record['properties'][data['from_data']]
+        else:
+          val = None
+
         new_props[key] = val
       record['properties'] = new_props
       new_file.write(record)
@@ -77,6 +83,7 @@ class Project:
                  "width": out_image.shape[2],
                  "transform": out_transform})
 
+    # TODO: If this file exists, can I merge the data?
     if name:
       to = self.path_for(name+'.tif')
       with rasterio.open(to, "w", **out_meta) as dest:

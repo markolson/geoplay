@@ -19,9 +19,6 @@ class NYFarmersMarket(Shapefile):
   def fetch_data(self):
     if self.SHP.exists():
       return
-
-    to_lat_lng = lambda row: [row['Latitude'], row['Longitude']]
-
     self.log("Fetching data...")
     urllib.request.urlretrieve(self.URL, self.DEST)
     self.log("Converting to Shapefile...")
