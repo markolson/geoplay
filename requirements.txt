@@ -32,7 +32,7 @@ packaging==19.2
 pandas==0.25.1
 patsy==0.5.1
 Pillow==6.1.0
-pip==19.2.3
+pip==21.1
 plotly==4.1.1
 PyCRS==1.0.1
 pyparsing==2.4.2
