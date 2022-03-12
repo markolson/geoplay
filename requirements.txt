@@ -31,7 +31,7 @@ osmnx==0.10
 packaging==19.2
 pandas==0.25.1
 patsy==0.5.1
-Pillow==6.1.0
+Pillow==9.0.1
 pip==19.2.3
 plotly==4.1.1
 PyCRS==1.0.1
